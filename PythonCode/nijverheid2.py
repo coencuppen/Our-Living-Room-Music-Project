@@ -30,9 +30,9 @@ class Camera:
 
 
 class Window:
-    def __init__(self, camera, mic, windowName, resize=(None, None)):
-        self.camera = camera
-        self.mic = mic
+    def __init__(self, _camera, _mic, windowName, resize=(None, None)):
+        self.camera = _camera
+        self.mic = _mic
         self.windowName = windowName
         self.gauss = np.random.randn(HEIGHT, WIDTH, 3)
         self.newHeight = resize[0]
@@ -59,7 +59,6 @@ class Window:
             if self.newHeight:
                 image = cv2.resize(image, (self.newHeight, self.newWidth), cv2.INTER_NEAREST)
 
-
             cv2.imshow(self.windowName, image)
 
             if cv2.waitKey(1) & 0xFF == 27:
@@ -68,7 +67,7 @@ class Window:
 
 
 if __name__ == '__main__':
-    WIDTH, HEIGHT = 240, 144  # afmeting tv 1280x720
+    WIDTH, HEIGHT = 240, 144  # resolution tv 1280x720
     camera = Camera(0)  # par should be 1
     mic = Microphone(pyaudio.paInt16, 1, 44100, 2 ** 10, 1)  # input device op 1
     window = Window(camera, mic, "Our Living Room Camera Feed", [1280, 720])
