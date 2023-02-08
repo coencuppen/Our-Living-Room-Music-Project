@@ -34,6 +34,8 @@ class Window:
         self.camera = _camera
         self.mic = _mic
         self.windowName = windowName
+        cv2.namedWindow(windowName, cv2.WND_PROP_FULLSCREEN)
+        cv2.setWindowProperty(windowName, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         self.gauss = np.random.randn(HEIGHT, WIDTH, 3)
         self.newHeight = resize[0]
         self.newWidth = resize[1]
@@ -41,7 +43,7 @@ class Window:
 
     def Effect(self, frame):
         micValue = self.mic.getAmplitude().__int__()
-        print(micValue)
+        # print(micValue)
 
         if micValue < 300:
             image = self.gauss - (micValue / 10)
@@ -57,7 +59,7 @@ class Window:
             image = self.Effect(frame)
 
             if self.newHeight:
-                image = cv2.resize(image, (self.newHeight, self.newWidth), cv2.INTER_NEAREST)
+                image = cv2.resize(image, (self.newHeight, self.newWidth), cv2.IN)
 
             cv2.imshow(self.windowName, image)
 
