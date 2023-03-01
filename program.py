@@ -48,7 +48,11 @@ class Window:
         if micValue < 300:
             image = self.gauss - (micValue / 10)
         else:
-            image = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) - micValue / 10
+            try:
+                image = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) - micValue / 10
+            except:
+                image = self.gauss - (micValue / 10)
+
 
         return image
 
@@ -59,7 +63,7 @@ class Window:
             image = self.Effect(frame)
 
             if self.newHeight:
-                image = cv2.resize(image, (self.newHeight, self.newWidth), cv2.IN)
+                image = cv2.resize(image, (self.newHeight, self.newWidth))
 
             cv2.imshow(self.windowName, image)
 
